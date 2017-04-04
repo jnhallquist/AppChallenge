@@ -1,6 +1,6 @@
-<div layout="column" flex="100" layout-align="center center">
-  <form name="emailForm" layout-fill layout-align="center center" layout="row" ng-submit="sendEmail(emailForm)" novalidate>
-    <md-content>
+<div layout="column" layout-align="center center" layout-fill style="margin-top:20px;">
+  <form name="emailForm" layout="column" ng-submit="sendEmail(emailForm)" novalidate>
+    <md-content style="overflow:visible;">
       <md-input-container>
         <label>Sender</label>
         <input name="senderFirstName" ng-model="senderFirstName" placeholder="Your First Name" required/>
