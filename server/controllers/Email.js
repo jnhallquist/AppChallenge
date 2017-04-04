@@ -31,7 +31,7 @@ let addEmail = function(req, res) {
     res.status(403).end();
   }
 
-  const newEmail = new Email(req.body.email);
+  let newEmail = new Email(req.body.email);
 
   // Let's sanitize inputs
   newEmail.recipient         = sanitizeHtml(newEmail.recipient);

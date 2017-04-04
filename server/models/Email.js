@@ -8,7 +8,7 @@ const emailSchema = new Mongoose.Schema({
   message          : { type: 'String', require: true},
   sender_first_name: { type: 'String', require: true},
   sender_last_name : { type: 'String', require: true},
-  created_on       : { type: 'Date', default: Date.now, required: true },
+  created_on       : { type: 'Date', default: Date.now(), required: true },
 });
 
 module.exports = Mongoose.model('Email', emailSchema);

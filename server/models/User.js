@@ -7,7 +7,7 @@ const Mongoose = require('mongoose'),
 const userSchema = new Mongoose.Schema({
   email      : { type: 'String', required: true, index: { unique: true } },
   password   : { type: 'String', required: true },
-  created_on : { type: 'Date', default: Date.now, required: true }
+  created_on : { type: 'Date', default: Date.now(), required: true }
 });
 
 userSchema.pre('save', function(next) {

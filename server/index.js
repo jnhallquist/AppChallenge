@@ -5,20 +5,21 @@ const express      = require('express'),
       app          = express(),
       path         = require('path'),
       bodyParser   = require('body-parser'),
-      serverConfig = require('./config');
+      serverConfig = require('./config'),
+      mongoose     = require('mongoose'),
+      seed         = require('./db/seed.js');
 
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
-// // MongoDB Connection
-// mongoose.connect(serverConfig.mongoURL, (error) => {
-//   if (error) {
-//     console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
-//     throw error;
-//   }
-//
-//   // feed some dummy data in DB.
-//   seedData();
-// });
+// MongoDB Connection
+mongoose.connect(serverConfig.mongoURL, (error) => {
+  if (error) {
+    console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
+    throw error;
+  }
+
+  seed();
+});
 
 app.use(express.static(path.join(__dirname, '..', 'dev')));
 app.set('view engine', 'html');
