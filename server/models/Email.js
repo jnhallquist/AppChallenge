@@ -3,7 +3,7 @@
 const Mongoose = require('mongoose');
 
 const emailSchema = new Mongoose.Schema({
-  user_id          : { type: 'Number', required: true },
+  user_id          : { type: 'String', required: true },
   recipient        : { type: 'String', required: true },
   message          : { type: 'String', require: true},
   sender_first_name: { type: 'String', require: true},

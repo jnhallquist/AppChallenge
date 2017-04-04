@@ -37,12 +37,6 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 require('./routes/email.routes')(app);
 require('./routes/user.routes')(app);
 
-app.get('/', function(req, res) {
-  res.render('../dev/index.html', function(err, html) {
-    res.send(html);
-  });
-});
-
 app.listen(serverConfig.port, (error) => {
   if (!error) {
     console.log(`Running on port: ${serverConfig.port}`);

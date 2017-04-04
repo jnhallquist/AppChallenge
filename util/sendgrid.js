@@ -3,7 +3,7 @@
 /* jshint esversion: 6 */
 const SendGrid = require('sendgrid')(require('../.secrets.json').sendgrid_key);
 
-module.exports = function send(req, res) {
+module.exports = function send(req) {
   let newEmail = SendGrid.emptyRequest({
     method: 'POST',
     path: '/v3/mail/send',
@@ -12,10 +12,10 @@ module.exports = function send(req, res) {
         {
           to: [
             {
-              email: req.body.form.email,
+              email: req.body.recipient,
             },
           ],
-          subject: `${req.body.form.firstName} ${req.body.form.lastName}`,
+          subject: `${req.body.sender_first_name} ${req.body.sender_last_name}`,
         },
       ],
       from: {
@@ -24,17 +24,11 @@ module.exports = function send(req, res) {
       content: [
         {
           type: 'text/plain',
-          value: req.body.form.message,
+          value: req.body.message,
         },
       ],
     },
   });
 
-  return sg.API(newEmail)
-  .then(response => {
-    res.send(`Email sent to: ${req.body.form.email}`);
-  })
-  .catch(error => {
-    res.status(500).send(error);
-  });
+  return SendGrid.API(newEmail);
 };

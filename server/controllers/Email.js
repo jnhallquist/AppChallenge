@@ -2,36 +2,51 @@
 /* jslint node: true */
 /* jshint esversion: 6 */
 const Email        = require('../models/Email.js'),
+      User         = require('../models/User.js'),
       sendGrid     = require('../../util/sendgrid.js'),
       sanitizeHtml = require('sanitize-html');
 
 let getEmails = function(req, res) {
-  Email.find().sort('-created_on').exec((err, emails) => {
-    if (err) {
-      res.status(500).send(err);
-    }
+  User.findById(req.body.user_id, function(err, users) {
+    if (!users) return res.statusCode(500);
 
-    res.json({ emails });
+    return Email.find().sort('-created_on').exec()
+    .then(function(emails) {
+      if (err) {
+        return res.statusCode(500);
+      }
+      
+      return res.json({ emails });
+    })
+    .catch(function(err) {
+      return res.statusCode(500);
+    });
   });
 };
 
 let sendEmail = function(req, res) {
-  sendGrid(req, res);
-  addEmail(req, res);
+  return sendGrid(req)
+  .then(function(response) {
+    return addEmail(req, res);
+  })
+  .catch(function(err) {
+    throw err;
+  });
 };
 
 let addEmail = function(req, res) {
   if (
-      !req.body.email.recipient ||
-      !req.body.email.message ||
-      !req.body.email.sender_first_name ||
-      !req.body.email.sender_last_name ||
-      !req.body.email.user_id
+      !req.body.recipient ||
+      !req.body.message ||
+      !req.body.sender_first_name ||
+      !req.body.sender_last_name ||
+      !req.body.user_id
      ) {
     res.status(403).end();
+    return;
   }
 
-  let newEmail = new Email(req.body.email);
+  let newEmail = new Email(req.body);
 
   // Let's sanitize inputs
   newEmail.recipient         = sanitizeHtml(newEmail.recipient);
@@ -42,10 +57,10 @@ let addEmail = function(req, res) {
 
   newEmail.save((err, saved) => {
     if (err) {
-      res.status(500).send(err);
+      return res.status(500).send(err);
     }
 
-    res.json({ post: saved });
+    return res.json({ post: saved });
   });
 };
 
