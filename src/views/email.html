@@ -1,24 +1,28 @@
-<form name="emailForm" layout="column" ng-submit="sendEmail(emailForm)" novalidate>
-  <md-content>
-    <md-input-container>
-      <label>Sender</label>
-      <input name="senderFirstName" ng-model="senderFirstName" placeholder="Your First Name" required/>
-    </md-input-container>
-    <md-input-container>
-      <input name="senderLastName" ng-model="senderLastName" placeholder="Your Last Name" required/>
-    </md-input-container><br/>
-    <md-input-container>
-      <label>Recipient</label>
-      <input name="email" ng-model="email" placeholder="Recipient's Email Address" required/>
-    </md-input-container><br/>
-    <md-input-container>
-      <label>Message (100 Characters Max)</label>
-      <input name="message" ng-model="message" placeholder="Say Something" ng-maxlength="100" required/>
-      <alert ng-show="emailForm.message.$error.maxlength">Message cannot contain more than 100 characters.</alert>
-    </md-input-container><br/>
-    <md-button class="md-raised md-primary" type="submit" ng-disabled="emailForm.$invalid">Send</md-button>
-  </md-content>
-</form>
+<div layout="column" flex="100" layout-align="center center">
+  <form name="emailForm" layout-fill layout-align="center center" layout="row" ng-submit="sendEmail(emailForm)" novalidate>
+    <md-content>
+      <md-input-container>
+        <label>Sender</label>
+        <input name="senderFirstName" ng-model="senderFirstName" placeholder="Your First Name" required/>
+      </md-input-container>
+      <md-input-container>
+        <input name="senderLastName" ng-model="senderLastName" placeholder="Your Last Name" required/>
+      </md-input-container><br/>
+      <md-input-container>
+        <label>Recipient</label>
+        <input name="email" ng-model="email" placeholder="Recipient's Email Address" required/>
+      </md-input-container><br/>
+      <md-input-container>
+        <label>Message (100 Characters Max)</label>
+        <input name="message" ng-model="message" placeholder="Say Something" ng-maxlength="100" required/>
+        <alert ng-show="emailForm.message.$error.maxlength">Message cannot contain more than 100 characters.</alert>
+      </md-input-container><br/>
+      <md-button class="md-raised md-primary" type="submit" ng-disabled="emailForm.$invalid">Send</md-button>
+    </md-content>
+  </form>
 
-<br/><br/>
-<md-button class="md-raised md-primary" ng-click="getEmails()">View Sent Messages</md-button>
+  <br/><br/>
+  <div layout="row">
+    <md-button class="md-raised md-primary" ng-click="getEmails()">View Sent Messages</md-button>
+  </div>
+</div>

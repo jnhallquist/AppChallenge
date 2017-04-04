@@ -1,4 +1,4 @@
-<div flex>
+<div flex=100 layout="column">
   <md-toolbar layout="row" class="md-hue-3">
     <div class="md-toolbar-tools">
       <span>Messages Sent</span>
@@ -7,7 +7,7 @@
 
   <md-content>
     <md-list flex>
-      <md-list-item class="md-3-line" ng-repeat="email in emailService.getEmails()">
+      <md-list-item class="md-3-line" layout="row" ng-repeat="email in emailService.getEmails()">
         <div class="md-list-item-text" layout="column">
           <p>{{ email.created_on | date:"MM/dd/yyyy 'at' h:mma" }}</p>
           <h3><strong>From: </strong>{{ email.sender_first_name }} {{ email.sender_last_name }}</h3></span>
