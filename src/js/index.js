@@ -9,15 +9,15 @@ var app = angular.module('challengeApp', [
 app.config(['$routeProvider', '$locationProvider', 'NotificationProvider', '$mdThemingProvider', '$httpProvider', function($routeProvider, $locationProvider, NotificationProvider, $mdThemingProvider, $httpProvider) {
   $routeProvider
     .when('/', {
-      templateUrl : 'views/index.html'
+      templateUrl: './index.html'
     })
-    .when('/challengeSendEmail', {
-      templateUrl : 'views/challengeSendEmail.html',
-      controller : 'challengeController'
+    .when('/email', {
+      templateUrl : 'views/email.html',
+      controller : 'emailController'
     })
-    .when('/challengeViewMessages', {
-      templateUrl : 'views/challengeViewMessages.html',
-      controller : 'challengeController'
+    .when('/emails', {
+      templateUrl : 'views/emails.html',
+      controller : 'emailController'
     })
     .otherwise({
       redirectTo: '/'
@@ -42,23 +42,6 @@ app.config(['$routeProvider', '$locationProvider', 'NotificationProvider', '$mdT
   $httpProvider.useApplyAsync(true);
 }]);
 
-// app.run(['userService', '$rootScope', '$location', function(userService, $rootScope, $location) {
-//
-//   userService.getIsLoggedIn()
-//   .then(function(res) {
-//     if (res) {
-//       userService.getUser();
-//     }
-//
-//     $rootScope.$on("$routeChangeStart", function(event, next, current) {
-//       if(next.isLoggedOut && userService.isloggedin()) {
-//           event.preventDefault();
-//       }
-//
-//       // if we want them to be logged in AND they are logged out, prevent controller load
-//       if(next.isLoggedIn && !userService.isloggedin()) {
-//           event.preventDefault();
-//       }
-//     });
-//   });
-// }]);
+app.run([function() {
+  Window.apiLocation = 'http://localhost:8000';
+}]);

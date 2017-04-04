@@ -7,7 +7,7 @@ const Mongoose = require('mongoose'),
 const userSchema = new Mongoose.Schema({
   email      : { type: 'String', required: true, index: { unique: true } },
   password   : { type: 'String', required: true },
-  created_on : { type: 'Date', default: Date.now, required: true }
+  created_on : { type: 'Date', default: Date.now(), required: true }
 });
 
 userSchema.pre('save', function(next) {
@@ -15,7 +15,7 @@ userSchema.pre('save', function(next) {
 
   if (!user.isModified('password')) return next();
 
-  bcrypt.genSalt(20, function(err, salt) {
+  bcrypt.genSalt(10, function(err, salt) {
     if (err) return next(err);
 
     bcrypt.hash(user.password, salt, function(err, hash) {
@@ -26,12 +26,5 @@ userSchema.pre('save', function(next) {
     });
   });
 });
-
-userSchema.methods.comparePassword = function(userPassword, cb) {
-  bcrypt.compare(userPassword, this.password, function(err, isMatch) {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
-};
 
 module.exports = Mongoose.model('User', userSchema);

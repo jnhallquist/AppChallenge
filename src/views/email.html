@@ -21,6 +21,8 @@
 </form>
 
 <br/><br/>
-<md-button class="md-raised md-primary" ng-click="getMessages()">View Sent Messages</md-button>
+<md-button class="md-raised md-primary" ng-click="getEmails()">View Sent Messages</md-button>
 
-<get-messages ng-if="showMessageList"></get-messages>
+<get-emails ng-if="emailService.getEmails()">
+  <div ng-repeat="email in emailService.getEmails()"> {{email}}
+</get-emails>

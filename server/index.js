@@ -5,20 +5,21 @@ const express      = require('express'),
       app          = express(),
       path         = require('path'),
       bodyParser   = require('body-parser'),
-      serverConfig = require('./config');
+      serverConfig = require('./config'),
+      mongoose     = require('mongoose'),
+      seed         = require('./db/seed.js');
 
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
-// // MongoDB Connection
-// mongoose.connect(serverConfig.mongoURL, (error) => {
-//   if (error) {
-//     console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
-//     throw error;
-//   }
-//
-//   // feed some dummy data in DB.
-//   seedData();
-// });
+// MongoDB Connection
+mongoose.connect(serverConfig.mongoURL, (error) => {
+  if (error) {
+    console.error('Please make sure Mongodb is installed and running!'); // eslint-disable-line no-console
+    throw error;
+  }
+
+  seed();
+});
 
 app.use(express.static(path.join(__dirname, '..', 'dev')));
 app.set('view engine', 'html');
@@ -35,12 +36,6 @@ app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 
 require('./routes/email.routes')(app);
 require('./routes/user.routes')(app);
-
-app.get('/', function(req, res) {
-  res.render('../dev/index.html', function(err, html) {
-    res.send(html);
-  });
-});
 
 app.listen(serverConfig.port, (error) => {
   if (!error) {
